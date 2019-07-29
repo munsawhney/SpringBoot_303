@@ -14,45 +14,45 @@ import javax.validation.Valid;
 @Controller
 public class HomeController {
     @Autowired
-    CourseRepository courseRepository;
+    CarRepository carRepository;
 
     @RequestMapping("/")
-    public String listCourses(Model model){
-        model.addAttribute("courses", courseRepository.findAll());
+    public String listCars(Model model){
+        model.addAttribute("cars", carRepository.findAll());
         return "list";
     }
 
     @GetMapping("/add")
-    public String courseForm(Model model){
-        model.addAttribute("course", new Course());
-        return "courseform";
+    public String carForm(Model model){
+        model.addAttribute("car", new Car());
+        return "carform";
     }
 
     @PostMapping("/process")
-    public String processForm(@Valid Course course,
+    public String processForm(@Valid Car car,
                               BindingResult result){
         if (result.hasErrors()){
-            return "courseform";
+            return "carform";
         }
-        courseRepository.save(course);
+        carRepository.save(car);
         return "redirect:/";
     }
 
     @RequestMapping("/detail/{id}")
-    public String showCourse(@PathVariable("id") long id, Model model){
-        model.addAttribute("course", courseRepository.findById(id).get());
+    public String showCar(@PathVariable("id") long id, Model model){
+        model.addAttribute("car", carRepository.findById(id).get());
         return "show";
     }
 
     @RequestMapping("/update/{id}")
-    public String updateCourse(@PathVariable("id")long id, Model model){
-        model.addAttribute("course", courseRepository.findById(id).get());
-        return "courseform";
+    public String updateCar(@PathVariable("id")long id, Model model){
+        model.addAttribute("car", carRepository.findById(id).get());
+        return "carform";
     }
 
     @RequestMapping("/delete/{id}")
     public String delCourse(@PathVariable("id")long id){
-        courseRepository.deleteById(id);
+        carRepository.deleteById(id);
         return "redirect:/";
     }
 }
